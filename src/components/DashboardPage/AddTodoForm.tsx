@@ -26,15 +26,26 @@ export default function AddTodoForm(props: AddTodoFormProps) {
     ]
 
     return (
-        <Dialog header="Add Todo" onHide={props.onHide} visible={props.visible}>
-            <InputText placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <InputTextarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-            <Calendar placeholder="Due Date" value={dueDate} onChange={(e) => setDueDate(e.value)} />
-            <Dropdown placeholder="Priority" options={priorityOptions} onChange={(e) => setPriority(e.value)} />
-            <Button label="Add" type="submit" onClick={e => {
-                e.preventDefault()
-                props.handleForm({ title, description, dueDate, priority })
-            }} />
+        <Dialog header="Add Todo" onHide={props.onHide} visible={props.visible} className="w-[40vw]">
+            <div className="flex flex-col gap-5 w-full h-full justify-between">
+                <InputText className="p-2" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <InputTextarea className="p-2" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <Calendar placeholder="Due Date" value={dueDate} onChange={(e) => setDueDate(e.value)} />
+                <Dropdown placeholder="Priority" value={priority} options={priorityOptions} onChange={(e) => setPriority(e.value)} />
+                <Button label="Add" type="submit" disabled={!title || !description || !dueDate || !priority} onClick={e => {
+                    e.preventDefault()
+                    if (!title || !description || !dueDate || !priority) {
+                        alert("Please fill all fields")
+                        return
+                    }
+                    props.handleForm({ title, description, dueDate, priority, completed: false })
+                    // invalidate form
+                    setTitle("")
+                    setDescription("")
+                    setDueDate(null)
+                    setPriority("low")
+                }} />
+            </div>
         </Dialog>
     )
 }

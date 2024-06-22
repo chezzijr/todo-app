@@ -7,6 +7,7 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import TodosContext, { type Todo } from "./todo";
 import List from "./List";
 import { createUUID } from "@/libs/utils/randomUUID";
+import DueToday from "./DueToday";
 
 export default function DashboardPage() {
     const currentUser = useSelector((state: IRootState) => state.currentUser.currentUser);
@@ -38,7 +39,7 @@ export default function DashboardPage() {
         {
             label: 'Due Today',
             icon: 'pi pi-fw pi-user',
-            command: () => setView(<div>Profile</div>)
+            command: () => setView(<DueToday />)
         },
         {
             label: 'Done',
