@@ -2,6 +2,7 @@ import { Fieldset } from "primereact/fieldset";
 import { Tag } from "primereact/tag";
 import type { Todo } from "./todo";
 import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
 
 type TodoProps = {
     todo: Todo;
@@ -9,7 +10,7 @@ type TodoProps = {
     updateTodo: (todo: Todo) => void;
 }
 
-export default function Todo({ todo, removeTodo }: TodoProps) {
+export default function Todo({ todo, removeTodo, updateTodo }: TodoProps) {
     const severity = "low" === todo.priority ? "success" : "medium" === todo.priority ? "warning" : "danger";
 
     return (
@@ -17,6 +18,7 @@ export default function Todo({ todo, removeTodo }: TodoProps) {
             <div className="flex justify-between w-full h-full">
                 <div>
                     <p>{todo.description}</p>
+                    <Checkbox checked={todo.completed} onChange={e => updateTodo({...todo, completed: !!e.checked})} />
                 </div>
                 <div className="flex flex-col justify-between h-full gap-3">
                     <Button
